@@ -61,3 +61,12 @@ GROUP BY Rooms.RoomNumber, Cabinets.[Cabinet ID],
  Cabinets.Comment, Rooms.RoomName, Rooms.RoomDescription 
 
 ORDER BY [Cabinets].[Cabinet Name] DESC, Cabinets.[Width String], Cabinets.[Height String]
+
+
+
+--Other tables
+--SELECT *
+--FROM [Notes]  Where Prompt="6. Notes"
+
+--SELECT *
+--FROM [Notes]  Where Prompt="81. Closet_Rods"
