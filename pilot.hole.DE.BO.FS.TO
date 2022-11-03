@@ -1,0 +1,261 @@
+; Daniel Gherghel - 11/03/22
+For Each BO | DE | FS | TO Part
+
+
+If setOp == null then
+    setOp<bool> = False
+    setOp<style> = 1
+    setOp<desc> = '1. Add First Operation to the part'
+end if
+
+If setOp == True then
+    if adjx == null then    
+        public adjx<meas> = 5mm
+        adjx<style> = 1
+        adjx<desc> = '2. Adjust x positioning op1'
+    end if
+
+    if adjy == null then
+        public adjy<meas> = 5mm
+        adjy<style> = 1
+        adjy<desc> = '3. Adjust y positioning op1'
+    end if
+
+    if adjz == null then
+        public adjz<meas> = 5mm
+        adjz<style> = 1
+        adjz<desc> = '4. Adjust z positioning'
+    end if
+
+    if adjopw == null then
+        public adjopw<meas> = 5mm
+        adjopw<style> = 1
+        adjopw<desc> = '5. Adjust operation width'
+    end if
+
+    if adjopz == null then
+        public adjopz<meas> = 5mm
+        adjopz<style> = 1
+        adjopz<desc> = '6. Adjust operation Depth'
+    end if
+
+    if addSop == null then
+        addSop<bool> = False
+        addSop<style> = 1
+        addSop<desc> = '7. Add second operation'
+    end if
+
+    if adjx1 == null then    
+        public adjx1<meas> = 5mm
+        adjx1<style> = 1
+        adjx1<desc> = '8. Adjust x positioning for op2'
+    end if
+
+    if adjy1 == null then
+        public adjy1<meas> = 5mm
+        adjy1<style> = 1
+        adjy1<desc> = '9. Adjust y positioning for op2'
+    end if
+
+;if the part is BO - Bottom - applies to the Wall cabinets
+If Name == 'BO' then
+    
+
+    Dim op1 as New Hole
+        op1.Visible<bool> = True
+        ; face work plan
+        op1._FACEWP = 2
+        ; sizing
+        op1.DX = adjopw ; width
+        op1.DY = 0 ; length
+        op1.DZ = adjopz ; thickness
+
+        ;positioning
+        op1.x = Cab.Case.BO.DX - adjy
+        op1.y = Cab.Case.BO.Y + (adjx-0.75)
+        op1.z = 0
+
+        ; angle
+        op1.ax<deg> = 0
+        op1.ay<deg> = 0
+        op1.az<deg> = 0
+
+            if addSop == true then
+            Dim op2 as New Hole
+                op2.Visible<bool> = True
+                ; face work plan
+                op2._FACEWP = 2
+                ; sizing
+                op2.DX = adjopw ; width
+                op2.DY = 0 ; length
+                op2.DZ = adjopz ; thickness
+
+                ;positioning
+                op2.x = Cab.Case.BO.DX - adjy1
+                op2.y = Cab.Case.BO.Y + (adjx1-0.75)
+                op2.z = 0
+
+                ; angle
+                op2.ax<deg> = 0
+                op2.ay<deg> = 0
+                op2.az<deg> = 0
+            else if addSop == false then
+                delete adjx1
+                delete adjy1
+            end if
+            end if
+
+; if the part is DE - Deck - applies to the Base/Tall cabinets
+else if Name == 'DE' then
+    Dim op3 as New Hole
+        op3.Visible<bool> = True
+        ; face work plan
+        op3._FACEWP = 2
+        ; sizing
+        op3.DX = adjopw ; width
+        op3.DY = 0 ; length
+        op3.DZ = adjopz ; thickness
+
+        ;positioning
+        op3.x = Cab.Case.DE.DX - adjy
+        op3.y = Cab.Interior.CO.X + (adjx-0.75)
+        op3.z = 0
+
+        ; angle
+        op3.ax<deg> = 0
+        op3.ay<deg> = 0
+        op3.az<deg> = 0
+
+            if addSop == true then
+            Dim op4 as New Hole
+                op4.Visible<bool> = True
+                ; face work plan
+                op4._FACEWP = 2
+                ; sizing
+                op4.DX = adjopw ; width
+                op4.DY = 0 ; length
+                op4.DZ = adjopz ; thickness
+
+                ;positioning
+                op4.x = Cab.Case.DE.DX - adjy1
+                op4.y = Cab.Interior.CO.X + (adjx1-0.75)
+                op4.z = 0
+                
+                ; angle
+                op4.ax<deg> = 0
+                op4.ay<deg> = 0
+                op4.az<deg> = 0
+            else if addSop == false then
+                delete adjx1
+                delete adjy1
+            end if
+            end if
+
+; if the part is FS - Fix shelf / applies to all fix shelfs
+else if Name = 'FS' then
+
+    Dim op5 as New Hole
+        op5.Visible<bool> = True
+        ; face work plan
+        op5._FACEWP = 2
+        ; sizing
+        op5.DX = adjopw ; width
+        op5.DY = 0 ; length
+        op5.DZ = adjopz ; thickness
+
+        ;positioning
+        op5.x = Cab.Interior.CO.DZ + adjy
+        op5.y = Cab.Interior.CO.X + (adjx-0.75) 
+        op5.z = 0
+
+        ; angle
+        op5.ax<deg> = 0
+        op5.ay<deg> = 0
+        op5.az<deg> = 0
+
+            if addSop == true then
+            Dim op6 as New Hole
+                op6.Visible<bool> = True
+                ; face work plan
+                op6._FACEWP = 2
+                ; sizing
+                op6.DX = adjopw ; width
+                op6.DY = 0 ; length
+                op6.DZ = adjopz ; thickness
+
+                ;positioning
+                op6.x = Cab.Interior.CO.DZ + adjy1
+                op6.y = Cab.Interior.CO.X + (adjx1-0.75)
+                
+                op6.z = 0
+                ; angle
+                op6.ax<deg> = 0
+                op6.ay<deg> = 0
+                op6.az<deg> = 0
+            else if addSop == false then
+                delete adjx1
+                delete adjy1
+            end if
+            end if
+
+; if the part is TO - Top / applies to all cabinets with a top
+else if Name = 'TO' then
+    Dim op7 as New Hole
+        op7.Visible<bool> = True
+        ; face work plan
+        op7._FACEWP = 2
+        ; sizing
+        op7.DX = adjopw ; width
+        op7.DY = 0 ; length
+        op7.DZ = adjopz ; thickness
+
+        ;positioning
+        op7.x = Cab.Interior.CO.DZ + adjy
+        op7.y = Cab.Interior.CO.X + (adjx-0.75)
+        op7.z = 0
+
+        ; angle
+        op7.ax<deg> = 0
+        op7.ay<deg> = 0
+        op7.az<deg> = 0
+
+            if addSop == true then
+            Dim op8 as New Hole
+                op8.Visible<bool> = True
+                ; face work plan
+                op8._FACEWP = 2
+                ; sizing
+                op8.DX = adjopw ; width
+                op8.DY = 0 ; length
+                op8.DZ = adjopz ; thickness
+
+                ;positioning
+                op8.x = Cab.Interior.CO.DZ + adjy1
+                op8.y = Cab.Interior.CO.X + (adjx1-0.75)
+                op8.z = 0
+
+                ; angle
+                op8.ax<deg> = 0
+                op8.ay<deg> = 0
+                op8.az<deg> = 0
+            else if addSop == false then
+                delete adjx1
+                delete adjy1
+            end if
+            end if
+
+end if
+end if
+end if
+end if
+
+else
+    delete adjx
+    delete adjy
+    delete adjz
+    delete adjopw
+    delete adjopz
+    delete addSop
+    delete adjx1
+    delete adjy1
+end if
